@@ -37,51 +37,6 @@ function love.update(dt)
 	end
 end
 
-function round(x)
-	return math.floor(x+0.5)
-end
-
-function distance(px, py, x, y)
-	return math.sqrt((px - x)^2 + (py - y)^2)
-end
-
-function between(sx, sy, ex, ey, tx, ty)
-	l = math.abs(distance(sx, sy, tx, ty) + distance(tx, ty, ex, ey) - distance(sx, sy, ex, ey))
-	if l < 0.01 then
-		return true
-	else
-		return false
-	end
-end
-
-function checkLine(OsX, OsY, OeX, OeY, TsX, TsY, TeX, TeY)
-	a1	= OeY - OsY
-	b1	= OsX - OeX
-	c1	= a1 * OsX + b1 * OsY
-
-	a2	= TeY - TsY
-	b2	= TsX - TeX
-	c2	= a2 * TsX + b2 * TsY
-
-	d	= a1 * b2 - a2 * b1
-
-	if d == 0 then
-		return false, false
-	else
-		x = (b2 * c1 - b1 * c2)/d
-		y = (a1 * c2 - a2 * c1)/d
-		if between(OsX, OsY, OeX, OeY, x, y) then
-			if between(TsX, TsY, TeX, TeY, x, y) then
-				return x,y
-			else
-				return false, false
-			end
-		else
-			return false, false
-		end
-	end
-end
-
 function ray(startx, starty, stepx, stepy, iter)
 	x = startx
 	y = starty
