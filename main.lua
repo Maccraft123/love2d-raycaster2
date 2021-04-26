@@ -1,7 +1,7 @@
 function love.load()
 	map = { {1, 1, 2, 3, 1 },
 		{6, 0, 0, 0, 4 },
-		{3, 0, 2, 1, 1 },
+		{8, 0, 2, 1, 1 },
 		{4, 0, 0, 0, 7 },
 		{1, 2, 4, 1, 7 } }
 	
@@ -54,17 +54,21 @@ function ray(startx, starty, stepx, stepy, iter)
 			if m == 8 then reflect = true else reflect = false end
 			if m == 9 then scatter = true else scatter = false end
 			cache = 80/steps 
-			r = cache*r
-			g = cache*g
-			b = cache*b
-			--if not reflect and not scatter then
+			--r = cache*r
+			--g = cache*g
+			--b = cache*b
+			if not reflect then
 				return r, g, b, cache
-			--elseif reflect and false then -- FIXME: looks weird
-			--	angle = angle + math.pi
-			--	stepx = math.sin(angle+remap(iter, 0, rays, -(90/fov), (90/fov)))
-			--	stepy = math.cos(angle+remap(iter, 0, rays, -(90/fov), (90/fov)))
-			--	steps = steps * 2
-			--end
+			elseif reflect then
+				r = 0
+				g = 0
+				b = 0
+				cache = 0
+				stepx = stepx * -1
+				stepy = stepy * -1
+				x = stepx*10 + x
+				y = stepy*10 + y
+			end
 		end
 		x = stepx + x
 		y = stepy + y
