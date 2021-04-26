@@ -65,9 +65,15 @@ function ray(startx, starty, stepx, stepy, iter)
 				b = 0
 				cache = 0
 
-				if stepx < stepy then
+				if (x % 1 < 0.05 or x % 1 > 0.95) and (y % 1 < 0.05 or y % 1 > 0.95) then
+					return 1, 1, 1, cache
+				end
+
+				if x % 1 < 0.05 or x % 1 > 0.95 then
 					stepx = stepx * -1
+					--stepy = stepy * -1
 				else
+					--stepx = stepx * -1
 					stepy = stepy * -1
 				end
 				x = stepx*10 + x
