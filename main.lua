@@ -23,10 +23,10 @@ function love.update(dt)
 		player.y = player.y - 2*dt*math.cos(player.a)
 	end
 	if love.keyboard.isDown("q") then
-		player.y = player.y - 2*dt*math.sin(player.a)
+		player.y = player.y + 2*dt*math.sin(player.a)
 		player.x = player.x - 2*dt*math.cos(player.a)
 	elseif love.keyboard.isDown("e") then
-		player.y = player.y + 2*dt*math.sin(player.a)
+		player.y = player.y - 2*dt*math.sin(player.a)
 		player.x = player.x + 2*dt*math.cos(player.a)
 
 	end
@@ -54,9 +54,9 @@ function ray(startx, starty, stepx, stepy, iter)
 			if m == 8 then reflect = true else reflect = false end
 			if m == 9 then scatter = true else scatter = false end
 			cache = 80/steps 
-			--r = cache*r
-			--g = cache*g
-			--b = cache*b
+			r = cache*r
+			g = cache*g
+			b = cache*b
 			if not reflect then
 				return r, g, b, cache
 			elseif reflect then
@@ -64,8 +64,18 @@ function ray(startx, starty, stepx, stepy, iter)
 				g = 0
 				b = 0
 				cache = 0
-				stepx = stepx * -1
-				stepy = stepy * -1
+
+				if (x % 1 < 0.05 or x % 1 > 0.95) and (y % 1 < 0.05 or y % 1 > 0.95) then
+					return 1, 1, 1, cache
+				end
+
+				if x % 1 < 0.05 or x % 1 > 0.95 then
+					stepx = stepx * -1
+					--stepy = stepy * -1
+				else
+					--stepx = stepx * -1
+					stepy = stepy * -1
+				end
 				x = stepx*10 + x
 				y = stepy*10 + y
 			end
